@@ -25,6 +25,10 @@ const PORT = process.env.PORT || 8000;
 const calculationRoutes = require("./routes/calculationRoutes");
 app.use("/api/calculations", calculationRoutes);
 
-app.listen( PORT , () => {
+app.get("/", (req, res) => {
+  res.send("Backend is running 🚀");
+});
+
+app.listen(process.env.PORT, () => {
   console.log("Server running on port" ,PORT);
 });
