@@ -8,7 +8,7 @@ const connectDB = require("./config/db");
 const app = express() 
 
 app.use(cors({
-   origin: ["http://localhost:3000", "http://localhost:3001"],
+   origin: ["http://localhost:3000", "http://localhost:3001" ,  "https://itachi-uchiha837.github.io"],
   //origin: "*",
   credentials: true
 }));
@@ -27,6 +27,14 @@ app.use("/api/calculations", calculationRoutes);
 
 app.get("/", (req, res) => {
   res.send("Backend is running 🚀");
+});
+
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    uptime: process.uptime(),
+    message: "Healthy",
+    timestamp: Date.now()
+  });
 });
 
 app.listen(process.env.PORT, () => {
