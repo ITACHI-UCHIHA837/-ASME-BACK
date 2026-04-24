@@ -41,6 +41,67 @@ const SECRET_KEY = "12345";
   }
 };
 
+
+
+
+//const User = require("../models/User");
+
+exports.ragisteruser = async (req, res) => {
+  try {
+    const { firstName,lastName, email, password } = req.body;
+
+    // check required
+    if (!firstName || !lastName || !email || !password) {
+      return res.status(400).json({ message: "All fields required" });
+    }
+
+    // check existing user
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: "User already exists" });
+    }
+   
+
+    // create user (no encryption as per your current setup)
+    const user = new User({
+      firstName,
+      lastName,
+      email,
+      password
+    });
+
+    await user.save();
+
+      const token = jwt.sign(    
+      { user_id: user._id },
+      SECRET_KEY,
+      { expiresIn: "1h" }
+    );
+
+    res.status(201).json({
+      message: "Registration successful",
+      user_id: user._id,
+      token: token,
+    });
+
+
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// exports.ragister= async(res,req)=>{
+//   try{
+//     const{email , password} = req.body;
+
+
+//   }
+//   catch(err){
+//     console.log(err)
+//   }
+// }
 // const authMiddleware = (req, res, next) => {
 //   const authHeader = req.headers["authorization"];
 
