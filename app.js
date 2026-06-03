@@ -8,7 +8,7 @@ const connectDB = require("./config/db");
 const app = express() 
 
 app.use(cors({
-   origin: ["http://localhost:3000", "http://localhost:3001" ,  "https://itachi-uchiha837.github.io"],
+   origin: ["http://localhost:3000","*", "http://localhost:3001" ,  "https://itachi-uchiha837.github.io"],
   //origin: "*",
   credentials: true
 }));
@@ -37,6 +37,6 @@ app.get("/health", (req, res) => {
   });
 });
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 8000, () => {
   console.log("Server running on port" ,PORT);
 });

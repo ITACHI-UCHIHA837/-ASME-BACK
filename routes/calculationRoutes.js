@@ -3,6 +3,8 @@ const router = express.Router();
 
 const {
   createCalculation,
+  saveCalculation,
+  Calculating,
   getStats,
   deleteCalculation
 } = require("../controllers/calculationController");
@@ -14,12 +16,13 @@ const { dashbord } = require("../controllers/dashbord");
 const { getprofile } = require("../controllers/profi");
 const {ragisteruser} = require("../controllers/authenticationcontroller")
 router.post("/store", authMiddleware, createCalculation);
+router.post("/savee", authMiddleware, saveCalculation);
+//router.post("/calculate",Calculating);
 router.get("/stats", authMiddleware, getStats);
 router.delete("/:id", authMiddleware, deleteCalculation);
 router.post("/login", loguser);
-console.log(ragisteruser);
+
 router.post("/ragister", ragisteruser);
 router.get("/dashboard", authMiddleware, dashbord);
 router.get("/profile", authMiddleware, getprofile);
-console.log(getprofile);
 module.exports = router;
